@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --color-gov-950: #070d1e;
+  --color-gov-900: #0c1833;
+  --color-gov-850: #102144;
+  --color-gov-800: #172c57;
+  --color-gov-700: #1e3a73;
+  
+  --color-teal-accent: #0891b2;
+  --color-cyan-glow: #06b6d4;
+  --color-growth-green: #10b981;
+  --color-warm-amber: #f59e0b;
+  --color-alert-rose: #f43f5e;
+}
+
+:root {
+  font-family: var(--font-sans);
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f8fafc;
+  color: #1e293b;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Print/Audit specific utilities */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
