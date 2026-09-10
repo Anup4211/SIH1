@@ -21,6 +21,10 @@ export const RoleProvider = ({ children }) => {
   const [isCourseModalOpen, setIsCourseModalOpen] = useState(false);
   const [courseModalPreFill, setCourseModalPreFill] = useState(null);
 
+  // Auth Modal state
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(true);
+  const [authRoleChoice, setAuthRoleChoice] = useState("government"); // "government" | "trainee"
+
   // Global Government Filters
   const [govFilters, setGovFilters] = useState({
     scheme: "all",
@@ -203,7 +207,11 @@ export const RoleProvider = ({ children }) => {
         toggleTraineeConsent,
         toggleProviderFlag,
         updateVerificationStatus,
-        dispatchAssistedCampaign
+        dispatchAssistedCampaign,
+        isAuthModalOpen,
+        setIsAuthModalOpen,
+        authRoleChoice,
+        setAuthRoleChoice
       }}
     >
       {children}

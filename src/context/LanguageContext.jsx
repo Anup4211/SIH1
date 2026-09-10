@@ -7,7 +7,11 @@ export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState("en"); // "en" | "hi"
 
   const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "en" ? "hi" : "en"));
+    setLanguage((prev) => {
+      if (prev === "en") return "hi";
+      if (prev === "hi") return "mr";
+      return "en";
+    });
   };
 
   const t = (key, fallback = "") => {

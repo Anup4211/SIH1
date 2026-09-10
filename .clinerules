@@ -1,0 +1,12 @@
+# Project: कौशल्य सेतू | Kaushal Setu (Maharashtra Skilling Outcomes & Impact Platform)
+
+## Tech Stack
+- Frontend: React 19, Vite, Tailwind CSS v4
+- Charts & Icons: Recharts, Lucide React
+- Code Quality: Oxlint
+
+## Guidelines
+- Always maintain clean UI design targeting government entity standards.
+- Follow Tailwind CSS v4 utility standards.
+- Check errors using the built-in terminal or oxlint if necessary.
+- Modify existing components like App.jsx carefully without removing core application state.

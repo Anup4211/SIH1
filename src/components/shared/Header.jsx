@@ -5,7 +5,7 @@ import { useLanguage } from "../../context/LanguageContext";
 
 export const Header = () => {
   const { role, setRole, activeTraineeId, setActiveTraineeId, traineeList } = useRole();
-  const { language, toggleLanguage, t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
 
   return (
     <header className="bg-gradient-to-r from-slate-950 via-slate-900 to-cyan-950 text-white border-b border-slate-800/80 sticky top-0 z-40 shadow-md">
@@ -49,18 +49,33 @@ export const Header = () => {
 
         {/* Action Controls: Language Toggle & Persona Switchers */}
         <div className="flex items-center flex-wrap gap-2.5 w-full md:w-auto justify-end">
-          {/* Language Toggle Button (English ⇄ Hindi) */}
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition-all shadow-inner"
-            title="Toggle Interface Language (English / Hindi)"
-          >
-            <Languages className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{language === "en" ? "English" : "हिन्दी"}</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-900/60 text-cyan-300 border border-cyan-700">
-              {language === "en" ? "HI" : "EN"}
-            </span>
-          </button>
+                    {/* Language Selector (English / Hindi / Marathi) */}
+          <div className="flex items-center bg-slate-900/90 p-0.5 rounded-xl border border-slate-700/80 shadow-inner">
+            <button
+              onClick={() => setLanguage("en")}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                language === "en" ? "bg-cyan-600 text-white shadow-xs" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLanguage("hi")}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                language === "hi" ? "bg-cyan-600 text-white shadow-xs" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              हिन्दी
+            </button>
+            <button
+              onClick={() => setLanguage("mr")}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                language === "mr" ? "bg-cyan-600 text-white shadow-xs" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              मराठी
+            </button>
+          </div>
 
           {/* Persona Switch Buttons */}
           <div className="bg-slate-900/90 p-1 rounded-xl border border-slate-700/80 flex items-center shadow-inner">
