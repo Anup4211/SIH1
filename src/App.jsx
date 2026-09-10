@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import { RoleProvider, useRole } from './context/RoleContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { Header } from './components/shared/Header';
@@ -70,7 +71,7 @@ const AppContent = () => {
   // Guard Clause 2: Government Portal Isolation
   if (role === 'government') {
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300">
         <Header onLogout={handleLogout} />
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <GovernmentDashboard />
@@ -84,7 +85,7 @@ const AppContent = () => {
   // Guard Clause 3: Trainee Portal Isolation
   if (role === 'trainee') {
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300">
         <Header onLogout={handleLogout} />
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <TraineeDashboard />
@@ -106,11 +107,13 @@ const AppContent = () => {
 
 function App() {
   return (
-    <LanguageProvider>
-      <RoleProvider>
-        <AppContent />
-      </RoleProvider>
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <RoleProvider>
+          <AppContent />
+        </RoleProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 

@@ -1,11 +1,13 @@
 import React from "react";
-import { Shield, Building2, User, Languages, Check, LogOut } from "lucide-react";
+import { Shield, Building2, User, Languages, Check, LogOut, Sun, Moon } from "lucide-react";
 import { useRole } from "../../context/RoleContext";
 import { useLanguage } from "../../context/LanguageContext";
+import { useTheme } from "../../context/ThemeContext";
 
 export const Header = ({ onLogout }) => {
   const { role, setRole, activeTraineeId, setActiveTraineeId, traineeList } = useRole();
   const { language, setLanguage, t } = useLanguage();
+  const { theme, toggleTheme, isDark } = useTheme();
 
   return (
     <header className="bg-gradient-to-r from-slate-950 via-slate-900 to-cyan-950 text-white border-b border-slate-800/80 sticky top-0 z-40 shadow-md">
@@ -76,6 +78,19 @@ export const Header = ({ onLogout }) => {
               मराठी
             </button>
           </div>
+
+          {/* Theme Toggle (Dark / Light) */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-center p-2 rounded-xl bg-slate-900/90 border border-slate-700/80 text-slate-300 hover:text-amber-300 hover:border-amber-500/40 transition-all cursor-pointer btn-interactive shadow-inner"
+            title={`Switch to ${isDark ? "Light" : "Dark"} Mode`}
+          >
+            {isDark ? (
+              <Sun className="w-3.5 h-3.5 text-amber-400 animate-in spin-in-180 duration-300" />
+            ) : (
+              <Moon className="w-3.5 h-3.5 text-cyan-300 animate-in spin-in-180 duration-300" />
+            )}
+          </button>
 
           {/* Active Portal Badge (Strict Role Separation) */}
           {role === "government" && (

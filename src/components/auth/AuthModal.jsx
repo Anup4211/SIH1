@@ -8,7 +8,8 @@ import {
   Lock,
   Mail,
   Smartphone,
-  AlertCircle
+  AlertCircle,
+  Sparkles
 } from 'lucide-react';
 import { useRole } from '../../context/RoleContext';
 import { useLanguage } from '../../context/LanguageContext';
@@ -58,37 +59,46 @@ export const AuthModal = ({ onLogin, onComplete }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-200 my-8">
+    <div className="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      {/* Ambient background glow elements */}
+      <div className="fixed inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
+        <div className="w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
+        <div className="w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
+      </div>
+
+      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200/80 ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-200 my-auto relative z-10">
         {/* State Seal & Header Banner */}
-        <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950 p-6 text-white text-center border-b border-slate-800 relative">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 via-cyan-500/20 to-emerald-500/20 border border-cyan-500/40 flex items-center justify-center mx-auto mb-3 shadow-inner">
+        <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950 p-6 sm:p-7 text-white text-center border-b border-slate-800/80 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-36 h-36 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-amber-500/20 via-cyan-500/20 to-emerald-500/20 border border-cyan-400/40 flex items-center justify-center mx-auto mb-3 shadow-inner">
             <Landmark className="w-6 h-6 text-cyan-400" />
           </div>
-          <h1 className="text-xl font-bold font-display tracking-tight text-white">
+          <h1 className="text-xl sm:text-2xl font-extrabold font-display tracking-tight text-white">
             कौशल्य सेतू • Kaushal Setu
           </h1>
-          <p className="text-xs text-slate-300 mt-1">
+          <p className="text-xs text-slate-300 mt-1 max-w-sm mx-auto font-sans leading-relaxed">
             Maharashtra Skilling Outcomes & Longitudinal Impact Platform
           </p>
-          <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-[10px] font-mono text-cyan-300">
+          <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/30 text-[10px] font-mono text-cyan-300 shadow-inner">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Govt. of Maharashtra Official Single Sign-On (SSO)</span>
+            <span>Govt. of Maharashtra Single Sign-On (SSO)</span>
           </div>
         </div>
 
         {/* Tab Selector: Sign In vs Sign Up */}
-        <div className="flex border-b border-slate-200 bg-slate-50/50">
+        <div className="flex border-b border-slate-200/80 bg-slate-50/80 p-1.5 gap-1.5">
           <button
             type="button"
             onClick={() => {
               setActiveTab('signin');
               setErrorMessage('');
             }}
-            className={`flex-1 py-3 text-center text-xs font-bold transition-all border-b-2 cursor-pointer ${
+            className={`flex-1 py-2.5 px-4 text-center text-xs font-bold rounded-xl transition-all cursor-pointer btn-interactive ${
               activeTab === 'signin'
-                ? 'border-cyan-600 text-cyan-800 bg-white shadow-xs'
-                : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60'
+                ? 'bg-white text-slate-900 shadow-xs border border-slate-200/70'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100/70'
             }`}
           >
             {t('signIn') || 'Sign In'}
@@ -99,33 +109,33 @@ export const AuthModal = ({ onLogin, onComplete }) => {
               setActiveTab('signup');
               setErrorMessage('');
             }}
-            className={`flex-1 py-3 text-center text-xs font-bold transition-all border-b-2 cursor-pointer ${
+            className={`flex-1 py-2.5 px-4 text-center text-xs font-bold rounded-xl transition-all cursor-pointer btn-interactive ${
               activeTab === 'signup'
-                ? 'border-cyan-600 text-cyan-800 bg-white shadow-xs'
-                : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60'
+                ? 'bg-white text-slate-900 shadow-xs border border-slate-200/70'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100/70'
             }`}
           >
             {t('signUp') || 'Sign Up'}
           </button>
         </div>
 
-        <div className="p-6 space-y-5">
+        <div className="p-5 sm:p-7 space-y-5">
           {/* Error Message Alert */}
           {errorMessage && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2.5 text-xs text-rose-800 animate-in fade-in duration-150">
+            <div className="p-3.5 bg-rose-50 border border-rose-200/80 rounded-2xl flex items-start gap-3 text-xs text-rose-800 animate-in fade-in duration-150 shadow-xs">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
               <div>
-                <span className="font-semibold">Action Required: </span>
+                <span className="font-bold">Required: </span>
                 {errorMessage}
               </div>
             </div>
           )}
 
-          {/* Section: Explicit Role Selection (Required for BOTH Sign In & Sign Up) */}
+          {/* Explicit Role Selection (Required for BOTH Sign In & Sign Up) */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
-                Select Your Access Role <span className="text-rose-500">*</span>
+              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-700 font-display">
+                Select Portal Access Role <span className="text-rose-500">*</span>
               </label>
               <span className="text-[10px] text-slate-500 font-medium">
                 {selectedRole ? 'Role Selected' : 'Required to proceed'}
@@ -137,22 +147,22 @@ export const AuthModal = ({ onLogin, onComplete }) => {
               <button
                 type="button"
                 onClick={() => handleRoleSelect('government')}
-                className={`p-3.5 rounded-xl border-2 text-left transition-all relative flex flex-col justify-between cursor-pointer ${
+                className={`p-3.5 rounded-2xl border-2 text-left transition-all relative flex flex-col justify-between cursor-pointer btn-interactive ${
                   selectedRole === 'government'
-                    ? 'border-orange-500 bg-orange-50/70 shadow-xs ring-2 ring-orange-500/20'
-                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/80 text-slate-700'
+                    ? 'border-cyan-600 bg-cyan-50/70 shadow-sm ring-2 ring-cyan-500/20'
+                    : 'border-slate-200/90 bg-white hover:border-slate-300 hover:bg-slate-50/80 text-slate-700'
                 }`}
               >
                 <div className="flex items-start justify-between">
-                  <div className="w-8 h-8 rounded-lg bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-600 mb-2">
+                  <div className="w-8 h-8 rounded-xl bg-cyan-100 border border-cyan-200 flex items-center justify-center text-cyan-700 mb-2 shadow-2xs">
                     <ShieldCheck className="w-4 h-4" />
                   </div>
                   {selectedRole === 'government' && (
-                    <CheckCircle2 className="w-4 h-4 text-orange-600" />
+                    <CheckCircle2 className="w-4 h-4 text-cyan-700" />
                   )}
                 </div>
                 <div>
-                  <div className="font-bold text-xs text-slate-900">Government Official</div>
+                  <div className="font-bold text-xs text-slate-900 font-display">Government Official</div>
                   <div className="text-[11px] text-slate-500 mt-0.5 leading-snug">
                     Departmental Admin, Analytics & Audits
                   </div>
@@ -163,22 +173,22 @@ export const AuthModal = ({ onLogin, onComplete }) => {
               <button
                 type="button"
                 onClick={() => handleRoleSelect('trainee')}
-                className={`p-3.5 rounded-xl border-2 text-left transition-all relative flex flex-col justify-between cursor-pointer ${
+                className={`p-3.5 rounded-2xl border-2 text-left transition-all relative flex flex-col justify-between cursor-pointer btn-interactive ${
                   selectedRole === 'trainee'
-                    ? 'border-indigo-600 bg-indigo-50/70 shadow-xs ring-2 ring-indigo-600/20'
-                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/80 text-slate-700'
+                    ? 'border-indigo-600 bg-indigo-50/70 shadow-sm ring-2 ring-indigo-500/20'
+                    : 'border-slate-200/90 bg-white hover:border-slate-300 hover:bg-slate-50/80 text-slate-700'
                 }`}
               >
                 <div className="flex items-start justify-between">
-                  <div className="w-8 h-8 rounded-lg bg-indigo-100 border border-indigo-200 flex items-center justify-center text-indigo-600 mb-2">
+                  <div className="w-8 h-8 rounded-xl bg-indigo-100 border border-indigo-200 flex items-center justify-center text-indigo-700 mb-2 shadow-2xs">
                     <User className="w-4 h-4" />
                   </div>
                   {selectedRole === 'trainee' && (
-                    <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+                    <CheckCircle2 className="w-4 h-4 text-indigo-700" />
                   )}
                 </div>
                 <div>
-                  <div className="font-bold text-xs text-slate-900">Trainee / Student</div>
+                  <div className="font-bold text-xs text-slate-900 font-display">Trainee / Candidate</div>
                   <div className="text-[11px] text-slate-500 mt-0.5 leading-snug">
                     Learning Journey & Skill Credentials
                   </div>
@@ -191,7 +201,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
           <form onSubmit={handleAuthSubmit} className="space-y-3.5 pt-1">
             {activeTab === 'signup' && (
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                <label className="block text-[11px] font-semibold text-slate-700 mb-1 font-sans">
                   Full Name
                 </label>
                 <input
@@ -200,13 +210,13 @@ export const AuthModal = ({ onLogin, onComplete }) => {
                   placeholder="e.g. Ramesh V. Pawar"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-cyan-500 focus:outline-hidden"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 focus:outline-hidden transition-all font-medium"
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+              <label className="block text-[11px] font-semibold text-slate-700 mb-1 font-sans">
                 {selectedRole === 'government'
                   ? 'Official Government ID / Email'
                   : selectedRole === 'trainee'
@@ -226,14 +236,14 @@ export const AuthModal = ({ onLogin, onComplete }) => {
                   }
                   value={emailOrId}
                   onChange={(e) => setEmailOrId(e.target.value)}
-                  className="w-full p-2.5 pl-9 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-cyan-500 focus:outline-hidden"
+                  className="w-full p-2.5 pl-9 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 focus:outline-hidden transition-all font-medium"
                 />
                 <Mail className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+              <label className="block text-[11px] font-semibold text-slate-700 mb-1 font-sans">
                 {activeTab === 'signup' ? 'Create Secure Password' : 'Password'}
               </label>
               <div className="relative">
@@ -243,7 +253,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
                   placeholder="••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-2.5 pl-9 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-cyan-500 focus:outline-hidden"
+                  className="w-full p-2.5 pl-9 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 focus:outline-hidden transition-all font-medium"
                 />
                 <Lock className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
               </div>
@@ -251,7 +261,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
 
             {activeTab === 'signup' && (
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                <label className="block text-[11px] font-semibold text-slate-700 mb-1 font-sans">
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -261,7 +271,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
                     placeholder="••••••••••••"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full p-2.5 pl-9 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-cyan-500 focus:outline-hidden"
+                    className="w-full p-2.5 pl-9 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 focus:outline-hidden transition-all font-medium"
                   />
                   <Lock className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
                 </div>
@@ -271,7 +281,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
             {/* Primary Action Button */}
             <button
               type="submit"
-              className="w-full mt-2 py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full mt-2 py-3 px-4 bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 hover:from-slate-800 hover:to-slate-800 text-white rounded-xl font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer btn-interactive"
             >
               <span>
                 {activeTab === 'signin'
@@ -291,8 +301,8 @@ export const AuthModal = ({ onLogin, onComplete }) => {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-200" />
             </div>
-            <div className="relative flex justify-center text-[11px] uppercase">
-              <span className="bg-white px-3 text-slate-400 font-semibold tracking-wider">
+            <div className="relative flex justify-center text-[10px] uppercase">
+              <span className="bg-white px-3 text-slate-400 font-semibold tracking-wider font-mono">
                 or continue with
               </span>
             </div>
@@ -304,7 +314,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
             <button
               type="button"
               onClick={() => handleSocialAuth('Google')}
-              className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-semibold text-xs transition-all shadow-2xs cursor-pointer group"
+              className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-semibold text-xs transition-all shadow-2xs cursor-pointer btn-interactive"
               title="Authenticate with Google / Gmail"
             >
               <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24">
@@ -332,7 +342,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
             <button
               type="button"
               onClick={() => handleSocialAuth('GitHub')}
-              className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl border border-slate-900 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-all shadow-2xs cursor-pointer group"
+              className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl border border-slate-900 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-all shadow-2xs cursor-pointer btn-interactive"
               title="Authenticate with GitHub"
             >
               <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24">
@@ -349,7 +359,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
             <button
               type="button"
               onClick={() => handleSocialAuth('Phone OTP')}
-              className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-semibold text-xs transition-all shadow-2xs cursor-pointer group"
+              className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-semibold text-xs transition-all shadow-2xs cursor-pointer btn-interactive"
               title="Authenticate via Mobile OTP (Aadhaar / Registered Mobile)"
             >
               <Smartphone className="w-3.5 h-3.5 text-cyan-600 shrink-0" />
@@ -357,7 +367,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
             </button>
           </div>
 
-          <div className="pt-2 text-center text-[11px] text-slate-400">
+          <div className="pt-2 text-center text-[10px] text-slate-400 font-sans">
             Protected by State Data Encryption Standard (AES-256) & Digilocker Consent Framework.
           </div>
         </div>
