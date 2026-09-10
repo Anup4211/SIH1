@@ -8,7 +8,19 @@ import { INITIAL_COURSES } from "../data/courses";
 const RoleContext = createContext(null);
 
 export const RoleProvider = ({ children }) => {
-  const [role, setRole] = useState("government"); // "government" | "trainee"
+  const [role, setRoleState] = useState(null); // default to null to prevent leaks
+
+  const setRole = (newRole) => {
+    setRoleState(newRole);
+    try {
+      if (!newRole) {
+        localStorage.removeItem("kaushal_setu_role");
+      } else {
+        localStorage.setItem("kaushal_setu_role", newRole);
+      }
+    } catch (e) {}
+  };
+
   const [activeTraineeId, setActiveTraineeId] = useState("TR-2024-8831");
   const [traineeList, setTraineeList] = useState(TRAINEE_PROFILES);
   const [providers, setProviders] = useState(INITIAL_PROVIDERS);
