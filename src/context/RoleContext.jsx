@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useMemo } from "react";
+import React, { createContext, useContext, useState, useMemo } from "react";
 import { INITIAL_PROVIDERS } from "../data/providers";
 import { INITIAL_VERIFICATIONS } from "../data/verifications";
 import { INITIAL_CAMPAIGNS } from "../data/followUpCampaigns";
@@ -8,7 +8,13 @@ import { INITIAL_COURSES } from "../data/courses";
 const RoleContext = createContext(null);
 
 export const RoleProvider = ({ children }) => {
-  const [role, setRoleState] = useState(null); // default to null to prevent leaks
+  const [role, setRoleState] = useState(() => {
+    try {
+      return localStorage.getItem("kaushal_setu_role") || null;
+    } catch (e) {
+      return null;
+    }
+  });
 
   const setRole = (newRole) => {
     setRoleState(newRole);

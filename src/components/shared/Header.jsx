@@ -1,9 +1,9 @@
-﻿import React from "react";
-import { Shield, Building2, User, Languages, Check } from "lucide-react";
+import React from "react";
+import { Shield, Building2, User, Languages, Check, LogOut } from "lucide-react";
 import { useRole } from "../../context/RoleContext";
 import { useLanguage } from "../../context/LanguageContext";
 
-export const Header = () => {
+export const Header = ({ onLogout }) => {
   const { role, setRole, activeTraineeId, setActiveTraineeId, traineeList } = useRole();
   const { language, setLanguage, t } = useLanguage();
 
@@ -77,65 +77,56 @@ export const Header = () => {
             </button>
           </div>
 
-          {/* Persona Switch Buttons */}
-          <div className="bg-slate-900/90 p-1 rounded-xl border border-slate-700/80 flex items-center shadow-inner">
-            <button
-              onClick={() => setRole("government")}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 ${
-                role === "government"
-                  ? "bg-gradient-to-r from-cyan-600 to-teal-600 text-white shadow-sm"
-                  : "text-slate-400 hover:text-white hover:bg-slate-800/60"
-              }`}
-            >
-              <Building2 className="w-3.5 h-3.5" />
-              <span>{t("roleGov")}</span>
-              {role === "government" && (
-                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              )}
-            </button>
-
-            <button
-              onClick={() => setRole("trainee")}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 ${
-                role === "trainee"
-                  ? "bg-gradient-to-r from-amber-600 to-rose-600 text-white shadow-sm"
-                  : "text-slate-400 hover:text-white hover:bg-slate-800/60"
-              }`}
-            >
-              <User className="w-3.5 h-3.5" />
-              <span>{t("roleTrainee")}</span>
-              {role === "trainee" && (
-                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              )}
-            </button>
-          </div>
-
-          {/* If Trainee role is active, allow switching between personas */}
-          {role === "trainee" && (
-            <div className="flex items-center gap-1.5 bg-amber-950/40 border border-amber-500/30 px-3 py-1 rounded-xl text-xs">
-              <span className="text-amber-300 font-medium text-[11px] hidden sm:inline">
-                {t("activeTraineeLabel")}
+          {/* Active Portal Badge (Strict Role Separation) */}
+          {role === "government" && (
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-xs text-cyan-200 shadow-inner">
+              <Building2 className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="font-semibold">{t("roleGov")}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="hidden lg:inline text-slate-400 font-normal ml-1">
+                • {t("officerBadge")}
               </span>
-              <select
-                value={activeTraineeId}
-                onChange={(e) => setActiveTraineeId(e.target.value)}
-                className="bg-transparent text-white font-semibold text-xs focus:outline-hidden cursor-pointer"
-              >
-                {traineeList.map((t) => (
-                  <option key={t.id} value={t.id} className="bg-slate-900 text-white">
-                    {t.name} ({t.employmentStatus})
-                  </option>
-                ))}
-              </select>
             </div>
           )}
 
-          {/* Status pill for Government */}
-          {role === "government" && (
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-xs text-cyan-200">
-              <span className="w-2 h-2 rounded-full bg-cyan-400" />
-              <span>{t("officerBadge")}</span>
+          {role === "trainee" && (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-amber-950/60 border border-amber-500/40 text-xs text-amber-200 shadow-inner">
+                <User className="w-3.5 h-3.5 text-amber-400" />
+                <span className="font-semibold">{t("roleTrainee")}</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+              </div>
+
+              {/* Trainee profile selector (for testing candidate personas) */}
+              <div className="flex items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 px-2.5 py-1 rounded-xl text-xs">
+                <span className="text-amber-300 font-medium text-[11px] hidden sm:inline">
+                  {t("activeTraineeLabel")}
+                </span>
+                <select
+                  value={activeTraineeId}
+                  onChange={(e) => setActiveTraineeId(e.target.value)}
+                  className="bg-transparent text-white font-semibold text-xs focus:outline-hidden cursor-pointer"
+                >
+                  {traineeList.map((t) => (
+                    <option key={t.id} value={t.id} className="bg-slate-900 text-white">
+                      {t.name} ({t.employmentStatus})
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
+          )}
+
+          {/* Sign Out Action Button */}
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 hover:border-rose-500/50 hover:bg-rose-950/40 text-slate-300 hover:text-rose-200 text-xs font-semibold transition-all cursor-pointer shadow-inner"
+              title="Sign Out of Session"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{t("signOut") || "Sign Out"}</span>
+            </button>
           )}
         </div>
       </div>

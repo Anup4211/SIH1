@@ -1,4 +1,4 @@
-﻿export const translations = {
+export const translations = {
   en: {
     // App Header & Branding
     appTitle: "Kaushal Setu",
@@ -121,14 +121,16 @@
     statusSeeking: "Actively Seeking",
     statusStudying: "Further Studies",
 
-    // Common Buttons
     save: "Save & Update",
     cancel: "Cancel",
     submit: "Submit",
     next: "Next",
     back: "Back",
     downloadPdf: "Download PDF",
-    close: "Close"
+    close: "Close",
+    signOut: "Sign Out",
+    signIn: "Sign In",
+    signUp: "Sign Up"
   },
   hi: {
     // App Header & Branding
@@ -259,7 +261,10 @@
     next: "आगे बढ़ें",
     back: "पीछे जाएं",
     downloadPdf: "पीडीएफ डाउनलोड करें",
-    close: "बंद करें"
+    close: "बंद करें",
+    signOut: "साइन आउट",
+    signIn: "साइन इन",
+    signUp: "साइन अप"
   },
   mr: {
     appTitle: "कौशल्य सेतू",
@@ -367,7 +372,10 @@
     next: "पुढे जा",
     back: "मागे जा",
     downloadPdf: "PDF डाउनलोड करा",
-    close: "बंद करा"
+    close: "बंद करा",
+    signOut: "साइन आउट",
+    signIn: "साइन इन",
+    signUp: "साइन अप"
   }
 };
 

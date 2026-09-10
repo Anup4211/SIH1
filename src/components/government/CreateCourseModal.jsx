@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { PlusCircle, Sparkles, BookOpen, MapPin, Users, Award, Tag, Check, X } from "lucide-react";
 import { Modal } from "../shared/Modal";
 import { SECTORS, SCHEMES } from "../../data/schemes";
@@ -7,8 +7,10 @@ import { useRole } from "../../context/RoleContext";
 import { useLanguage } from "../../context/LanguageContext";
 
 export const CreateCourseModal = ({ isOpen, onClose, preFillData }) => {
-  const { createNewCourse } = useRole();
+  const { role, createNewCourse } = useRole();
   const { t } = useLanguage();
+
+  if (role !== "government" || !isOpen) return null;
 
   const [courseName, setCourseName] = useState("");
   const [sector, setSector] = useState("Automotive & EV");

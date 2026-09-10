@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RoleProvider, useRole } from './context/RoleContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { Header } from './components/shared/Header';
@@ -39,8 +39,12 @@ const MainFooter = () => {
 };
 
 const AppContent = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { role, setRole } = useRole();
+  const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(role));
+
+  useEffect(() => {
+    setIsAuthenticated(Boolean(role));
+  }, [role]);
 
   const handleLogout = () => {
     setRole(null);
@@ -51,8 +55,14 @@ const AppContent = () => {
   if (!isAuthenticated || !role) {
     return (
       <AuthModal
-        onLogin={() => setIsAuthenticated(true)}
-        onComplete={() => setIsAuthenticated(true)}
+        onLogin={(selectedRole) => {
+          if (selectedRole) setRole(selectedRole);
+          setIsAuthenticated(true);
+        }}
+        onComplete={(selectedRole) => {
+          if (selectedRole) setRole(selectedRole);
+          setIsAuthenticated(true);
+        }}
       />
     );
   }

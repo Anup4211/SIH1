@@ -1,5 +1,5 @@
-﻿import React from "react";
-import { User, Award, MapPin, Building, CheckCircle2 } from "lucide-react";
+import React from "react";
+import { User, Award, MapPin, Building, CheckCircle2, ShieldAlert } from "lucide-react";
 import { JourneyTimeline } from "./JourneyTimeline";
 import { EmploymentStatusCard } from "./EmploymentStatusCard";
 import { QuickCheckInSurvey } from "./QuickCheckInSurvey";
@@ -12,8 +12,23 @@ import { useRole } from "../../context/RoleContext";
 import { useLanguage } from "../../context/LanguageContext";
 
 export const TraineeDashboard = () => {
-  const { activeTrainee } = useRole();
+  const { role, activeTrainee } = useRole();
   const { t } = useLanguage();
+
+  // Strict Role Isolation Guard
+  if (role !== "trainee") {
+    return (
+      <div className="p-8 text-center bg-rose-50 border border-rose-200 rounded-2xl my-6">
+        <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center mx-auto mb-3">
+          <ShieldAlert className="w-6 h-6" />
+        </div>
+        <h2 className="text-base font-bold text-rose-900">Access Restricted</h2>
+        <p className="text-xs text-rose-700 mt-1 max-w-md mx-auto">
+          Candidate / Trainee credentials are required to view personal learning journeys, check-ins, and wage progression.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import {
   LayoutDashboard,
   Filter,
@@ -9,7 +9,8 @@ import {
   FileDown,
   Database,
   Compass,
-  PlusCircle
+  PlusCircle,
+  ShieldAlert
 } from "lucide-react";
 import { StatewideOverview } from "./StatewideOverview";
 import { FunnelAnalytics } from "./FunnelAnalytics";
@@ -25,10 +26,25 @@ import { useRole } from "../../context/RoleContext";
 import { useLanguage } from "../../context/LanguageContext";
 
 export const GovernmentDashboard = () => {
-  const { isCourseModalOpen, setIsCourseModalOpen, courseModalPreFill } = useRole();
+  const { role, isCourseModalOpen, setIsCourseModalOpen, courseModalPreFill } = useRole();
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("overview");
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+
+  // Strict Role Isolation Guard
+  if (role !== "government") {
+    return (
+      <div className="p-8 text-center bg-rose-50 border border-rose-200 rounded-2xl my-6">
+        <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center mx-auto mb-3">
+          <ShieldAlert className="w-6 h-6" />
+        </div>
+        <h2 className="text-base font-bold text-rose-900">Access Restricted</h2>
+        <p className="text-xs text-rose-700 mt-1 max-w-md mx-auto">
+          Government Official credentials are required to view administrative management, course creation, and policy analytics.
+        </p>
+      </div>
+    );
+  }
 
   const tabs = [
     { id: "overview", label: t("tabOverview"), icon: LayoutDashboard },
