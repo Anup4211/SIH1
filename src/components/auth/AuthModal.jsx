@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Landmark,
   ShieldCheck,
@@ -9,22 +9,30 @@ import {
   Mail,
   Smartphone,
   AlertCircle,
-  Sparkles
+  Sparkles,
+  X
 } from 'lucide-react';
 import { useRole } from '../../context/RoleContext';
 import { useLanguage } from '../../context/LanguageContext';
 
-export const AuthModal = ({ onLogin, onComplete }) => {
-  const { setRole: setGlobalRole } = useRole();
+export const AuthModal = ({ onLogin, onComplete, onClose }) => {
+  const { setRole: setGlobalRole, authRoleChoice } = useRole();
   const { t } = useLanguage();
 
   const [activeTab, setActiveTab] = useState('signin'); // 'signin' | 'signup'
-  const [selectedRole, setSelectedRole] = useState(null); // 'government' | 'trainee' | null
+  const [selectedRole, setSelectedRole] = useState(authRoleChoice || null); // 'government' | 'trainee' | null
   const [emailOrId, setEmailOrId] = useState('');
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Sync with context if it changes while modal is open
+  useEffect(() => {
+    if (authRoleChoice) {
+      setSelectedRole(authRoleChoice);
+    }
+  }, [authRoleChoice]);
 
   const handleRoleSelect = (role) => {
     setSelectedRole(role);
@@ -39,6 +47,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
     }
 
     setGlobalRole(selectedRole);
+    if (onClose) onClose();
     const callback = onLogin || onComplete;
     if (callback) {
       callback(selectedRole);
@@ -52,6 +61,7 @@ export const AuthModal = ({ onLogin, onComplete }) => {
     }
 
     setGlobalRole(selectedRole);
+    if (onClose) onClose();
     const callback = onLogin || onComplete;
     if (callback) {
       callback(selectedRole);
@@ -59,7 +69,12 @@ export const AuthModal = ({ onLogin, onComplete }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div 
+      className="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget && onClose) onClose();
+      }}
+    >
       {/* Ambient background glow elements */}
       <div className="fixed inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
         <div className="w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
@@ -69,6 +84,16 @@ export const AuthModal = ({ onLogin, onComplete }) => {
       <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200/80 ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-200 my-auto relative z-10">
         {/* State Seal & Header Banner */}
         <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950 p-6 sm:p-7 text-white text-center border-b border-slate-800/80 relative overflow-hidden">
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-1.5 rounded-full bg-slate-800/60 hover:bg-slate-700/80 text-slate-400 hover:text-white transition-colors cursor-pointer z-20"
+              title="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+          
           <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-36 h-36 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
 

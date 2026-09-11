@@ -1,4 +1,5 @@
-﻿import React, { createContext, useContext, useState, useMemo } from "react";
+﻿/* oxlint-disable react/only-export-components */
+import React, { createContext, useContext, useState, useMemo, useEffect } from "react";
 import { INITIAL_PROVIDERS } from "../data/providers";
 import { INITIAL_VERIFICATIONS } from "../data/verifications";
 import { INITIAL_CAMPAIGNS } from "../data/followUpCampaigns";
@@ -11,7 +12,7 @@ export const RoleProvider = ({ children }) => {
   const [role, setRoleState] = useState(() => {
     try {
       return localStorage.getItem("kaushal_setu_role") || null;
-    } catch (e) {
+    } catch (_e) {
       return null;
     }
   });
@@ -24,7 +25,7 @@ export const RoleProvider = ({ children }) => {
       } else {
         localStorage.setItem("kaushal_setu_role", newRole);
       }
-    } catch (e) {}
+    } catch (_e) {}
   };
 
   const [activeTraineeId, setActiveTraineeId] = useState("TR-2024-8831");
@@ -32,7 +33,20 @@ export const RoleProvider = ({ children }) => {
   const [providers, setProviders] = useState(INITIAL_PROVIDERS);
   const [verifications, setVerifications] = useState(INITIAL_VERIFICATIONS);
   const [campaigns, setCampaigns] = useState(INITIAL_CAMPAIGNS);
-  const [courses, setCourses] = useState(INITIAL_COURSES);
+  const [courses, setCourses] = useState(() => {
+    try {
+      const saved = localStorage.getItem("kaushal_setu_courses");
+      return saved ? JSON.parse(saved) : INITIAL_COURSES;
+    } catch (_e) {
+      return INITIAL_COURSES;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("kaushal_setu_courses", JSON.stringify(courses));
+    } catch (_e) {}
+  }, [courses]);
   const [toasts, setToasts] = useState([]);
 
   // Course Creation Modal state for linking from Skill-Gap Panel
@@ -40,7 +54,7 @@ export const RoleProvider = ({ children }) => {
   const [courseModalPreFill, setCourseModalPreFill] = useState(null);
 
   // Auth Modal state
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(true);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authRoleChoice, setAuthRoleChoice] = useState("government"); // "government" | "trainee"
 
   // Global Government Filters

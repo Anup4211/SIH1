@@ -53,6 +53,30 @@ const BATCH_FACTORS = {
   "2022": 0.76,
 };
 
+// Custom Tooltip component defined at module scope to satisfy React Compiler requirements
+const CustomTooltip = ({ active, payload, label, activeMetricView }) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div className="bg-slate-900 dark:bg-slate-950 text-white p-3 rounded-xl shadow-xl border border-slate-700 text-xs space-y-1">
+        <div className="font-bold font-display text-cyan-300">{label || data.stage}</div>
+        {payload.map((p, i) => (
+          <div key={i} className="text-slate-200">
+            {p.name || "Trainees"}: <span className="font-semibold text-white">{typeof p.value === "number" ? (activeMetricView === "wageGrowth" ? `₹${p.value.toLocaleString("en-IN")}` : activeMetricView === "retention" ? `${p.value}%` : p.value.toLocaleString("en-IN")) : p.value}</span>
+          </div>
+        ))}
+        {data.dropPct !== undefined && data.dropPct > 0 && (
+          <div className="text-rose-300 flex items-center gap-1 pt-1 border-t border-slate-800 mt-1">
+            <TrendingDown className="w-3 h-3" />
+            <span>Drop-off from previous stage: {data.dropPct}%</span>
+          </div>
+        )}
+      </div>
+    );
+  }
+  return null;
+};
+
 export const FunnelAnalytics = () => {
   const { govFilters, setGovFilters } = useRole();
   const { t } = useLanguage();
@@ -159,7 +183,7 @@ export const FunnelAnalytics = () => {
     });
   }, [govFilters.scheme, govFilters.sector, govFilters.district, govFilters.batchYear]);
 
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload, label, activeMetricView }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
@@ -483,4 +507,5 @@ export const FunnelAnalytics = () => {
     </div>
   );
 };
+
 

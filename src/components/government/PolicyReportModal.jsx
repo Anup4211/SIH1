@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FileDown, Printer, CheckCircle, FileText, Download, Calendar, Layers, Shield } from "lucide-react";
+import { Download } from "lucide-react";
 import { Modal } from "../shared/Modal";
 import { SCHEMES } from "../../data/schemes";
 import { DIVISIONS } from "../../data/districts";
@@ -7,13 +7,14 @@ import { useRole } from "../../context/RoleContext";
 
 export const PolicyReportModal = ({ isOpen, onClose }) => {
   const { role, showToast } = useRole();
-  if (role !== "government" || !isOpen) return null;
   const [reportType, setReportType] = useState("provider_audit"); // "provider_audit" | "district_equity" | "scheme_roi"
   const [format, setFormat] = useState("pdf"); // "pdf" | "csv" | "xlsx"
   const [scheme, setScheme] = useState("all");
   const [division, setDivision] = useState("All Divisions");
   const [includeUnverified, setIncludeUnverified] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+
+  if (role !== "government" || !isOpen) return null;
 
   const handleGenerate = () => {
     setIsGenerating(true);

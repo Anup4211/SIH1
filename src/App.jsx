@@ -7,7 +7,9 @@ import { ToastContainer } from './components/shared/ToastContainer';
 import { GovernmentDashboard } from './components/government/GovernmentDashboard';
 import { TraineeDashboard } from './components/trainee/TraineeDashboard';
 import { AuthModal } from './components/auth/AuthModal';
+import { HeroLanding } from './components/layout/HeroLanding';
 import { Landmark } from 'lucide-react';
+
 
 const MainFooter = () => {
   const { t } = useLanguage();
@@ -40,31 +42,39 @@ const MainFooter = () => {
 };
 
 const AppContent = () => {
-  const { role, setRole } = useRole();
-  const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(role));
-
-  useEffect(() => {
-    setIsAuthenticated(Boolean(role));
-  }, [role]);
+  const { role, setRole, isAuthModalOpen, setIsAuthModalOpen, setAuthRoleChoice } = useRole();
+  const isAuthenticated = Boolean(role);
 
   const handleLogout = () => {
     setRole(null);
-    setIsAuthenticated(false);
   };
 
   // Guard Clause 1: Unauthenticated or No Role Selected
   if (!isAuthenticated || !role) {
     return (
-      <AuthModal
-        onLogin={(selectedRole) => {
-          if (selectedRole) setRole(selectedRole);
-          setIsAuthenticated(true);
-        }}
-        onComplete={(selectedRole) => {
-          if (selectedRole) setRole(selectedRole);
-          setIsAuthenticated(true);
-        }}
-      />
+      <div className="relative min-h-screen bg-slate-950 text-white flex flex-col justify-between">
+        <HeroLanding
+          onOpenAuth={(type) => {
+            if (type === 'government' || type === 'trainee') {
+              setAuthRoleChoice(type);
+            }
+            setIsAuthModalOpen(true);
+          }}
+        />
+        {isAuthModalOpen && (
+          <AuthModal
+            onClose={() => setIsAuthModalOpen(false)}
+            onLogin={(selectedRole) => {
+              setRole(selectedRole);
+              setIsAuthModalOpen(false);
+            }}
+            onComplete={(selectedRole) => {
+              setRole(selectedRole);
+              setIsAuthModalOpen(false);
+            }}
+          />
+        )}
+      </div>
     );
   }
 
@@ -99,8 +109,9 @@ const AppContent = () => {
   // Fallback
   return (
     <AuthModal
-      onLogin={() => setIsAuthenticated(true)}
-      onComplete={() => setIsAuthenticated(true)}
+      onClose={() => setIsAuthModalOpen(false)}
+      onLogin={(selectedRole) => setRole(selectedRole)}
+      onComplete={(selectedRole) => setRole(selectedRole)}
     />
   );
 };

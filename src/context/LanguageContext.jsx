@@ -1,4 +1,5 @@
-﻿import React, { createContext, useContext, useState } from "react";
+﻿/* oxlint-disable react/only-export-components */
+import React, { createContext, useContext, useState } from "react";
 import { translations } from "../data/i18n";
 
 const LanguageContext = createContext(null);

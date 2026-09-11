@@ -10,8 +10,7 @@ export const CreateCourseModal = ({ isOpen, onClose, preFillData }) => {
   const { role, createNewCourse } = useRole();
   const { t } = useLanguage();
 
-  if (role !== "government" || !isOpen) return null;
-
+  // Reorder hooks so they are always called at the top level
   const [courseName, setCourseName] = useState("");
   const [sector, setSector] = useState("Automotive & EV");
   const [duration, setDuration] = useState("120 Hours (4 Weeks)");
@@ -45,6 +44,8 @@ export const CreateCourseModal = ({ isOpen, onClose, preFillData }) => {
       setAddressedGap("");
     }
   }, [preFillData, isOpen]);
+
+  if (role !== "government" || !isOpen) return null;
 
   const handleToggleDistrict = (districtName) => {
     if (targetDistricts.includes(districtName)) {

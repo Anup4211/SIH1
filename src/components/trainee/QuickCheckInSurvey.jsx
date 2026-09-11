@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { CheckCircle2, Star, ArrowRight, ArrowLeft, Send, Sparkles, Info, ShieldCheck } from "lucide-react";
 import { STATUS_INFO_MAP } from "../../data/statusInfo";
 import { useRole } from "../../context/RoleContext";
@@ -14,7 +14,7 @@ export const QuickCheckInSurvey = () => {
   const [selectedStatus, setSelectedStatus] = useState(
     activeTrainee.employmentStatus === "Self-employed" ? "Self-employed" : "Employed"
   );
-  const [incomeRange, setIncomeRange] = useState("₹15,000 - ₹20,000");
+  const [incomeRange, setIncomeRange] = useState("?15,000 - ?20,000");
   const [jobTitle, setJobTitle] = useState(activeTrainee.jobTitle || "");
   const [courseRelevance, setCourseRelevance] = useState("Directly Related");
   const [unemployedReason, setUnemployedReason] = useState("Wage offered was below local living expenses");
@@ -36,11 +36,11 @@ export const QuickCheckInSurvey = () => {
     setIsCompleted(true);
 
     const wageEst =
-      incomeRange === "Under ₹10,000"
+      incomeRange === "Under ?10,000"
         ? 9500
-        : incomeRange === "₹10,000 - ₹15,000"
+        : incomeRange === "?10,000 - ?15,000"
         ? 13500
-        : incomeRange === "₹15,000 - ₹20,000"
+        : incomeRange === "?15,000 - ?20,000"
         ? 17500
         : 23000;
 
@@ -184,7 +184,7 @@ export const QuickCheckInSurvey = () => {
                     Monthly In-hand Salary Band:
                   </label>
                   <div className="grid grid-cols-2 gap-2">
-                    {["Under ₹10,000", "₹10,000 - ₹15,000", "₹15,000 - ₹20,000", "Above ₹20,000"].map((range) => (
+                    {["Under ?10,000", "?10,000 - ?15,000", "?15,000 - ?20,000", "Above ?20,000"].map((range) => (
                       <button
                         type="button"
                         key={range}
@@ -341,3 +341,4 @@ export const QuickCheckInSurvey = () => {
     </div>
   );
 };
+

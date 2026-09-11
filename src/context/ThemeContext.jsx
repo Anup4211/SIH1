@@ -1,3 +1,4 @@
+/* oxlint-disable react/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const ThemeContext = createContext(null);
@@ -10,7 +11,7 @@ export const ThemeProvider = ({ children }) => {
       return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light";
-    } catch (e) {
+    } catch (_e) {
       return "light";
     }
   });
@@ -24,7 +25,7 @@ export const ThemeProvider = ({ children }) => {
     }
     try {
       localStorage.setItem("kaushal_setu_theme", theme);
-    } catch (e) {}
+    } catch (_e) {}
   }, [theme]);
 
   const toggleTheme = () => {

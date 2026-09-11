@@ -103,5 +103,68 @@
       hi: "कॉलेज का नाम या प्रवेश पर्ची (वैकल्पिक)।"
     },
     accentColor: "blue"
+  },
+  Student: {
+    id: "Student",
+    badge: "Current Learner",
+    title: {
+      en: "Full-time Student",
+      hi: "पूर्णकालिक छात्र"
+    },
+    meaning: {
+      en: "You are currently enrolled in a formal educational institution.",
+      hi: "आप वर्तमान में एक औपचारिक शैक्षणिक संस्थान में नामांकित हैं।"
+    },
+    whatHappensNext: {
+      en: "We will track your graduation timeline to provide timely career guidance and placement opportunities.",
+      hi: "हम आपको समय पर करियर मार्गदर्शन और प्लेसमेंट के अवसर प्रदान करने के लिए आपके स्नातक होने की समयरेखा को ट्रैक करेंगे।"
+    },
+    suggestedProof: {
+      en: "Student ID Card or latest semester mark sheet.",
+      hi: "छात्र आईडी कार्ड या नवीनतम सेमेस्टर मार्कशीट।"
+    },
+    accentColor: "indigo"
+  },
+  Intern: {
+    id: "Intern",
+    badge: "Early Exposure",
+    title: {
+      en: "Internship / Trainee",
+      hi: "इंटर्नशिप / प्रशिक्षु"
+    },
+    meaning: {
+      en: "You are gaining practical work experience in a professional setting for a limited duration.",
+      hi: "आप एक सीमित अवधि के लिए पेशेवर सेटिंग में व्यावहारिक कार्य अनुभव प्राप्त कर रहे हैं।"
+    },
+    whatHappensNext: {
+      en: "Internships often lead to pre-placement offers (PPO). We help you document this experience in your career journey.",
+      hi: "इंटर्नशिप अक्सर प्री-प्लेसमेंट ऑफर (PPO) की ओर ले जाती है। हम आपकी करियर यात्रा में इस अनुभव को दस्तावेजीकरण करने में आपकी सहायता करते हैं।"
+    },
+    suggestedProof: {
+      en: "Internship Offer Letter or Certificate.",
+      hi: "इंटर्नशिप ऑफर लेटर या सर्टिफिकेट।"
+    },
+    accentColor: "cyan"
+  },
+  Upskilling: {
+    id: "Upskilling",
+    badge: "Skill Enhancement",
+    title: {
+      en: "Upskilling / Certifying",
+      hi: "कौशल उन्नयन / प्रमाणन"
+    },
+    meaning: {
+      en: "You are already working or studying but taking additional courses to upgrade your skills.",
+      hi: "आप पहले से ही काम कर रहे हैं या पढ़ रहे हैं लेकिन अपने कौशल को उन्नत करने के लिए अतिरिक्त पाठ्यक्रम ले रहे हैं।"
+    },
+    whatHappensNext: {
+      en: "Your profile is updated with the new skill set, making you eligible for higher-tier job roles and wage growth.",
+      hi: "आपकी प्रोफ़ाइल नए कौशल सेट के साथ अपडेट की गई है, जो आपको उच्च-स्तरीय नौकरी भूमिकाओं और वेतन वृद्धि के लिए पात्र बनाती है।"
+    },
+    suggestedProof: {
+      en: "Course enrollment receipt or micro-credential certificate.",
+      hi: "पाठ्यक्रम नामांकन रसीद या माइक्रो-क्रेडेंशियल प्रमाणपत्र।"
+    },
+    accentColor: "rose"
   }
 };
